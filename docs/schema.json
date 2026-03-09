@@ -1,0 +1,45 @@
+{
+  "tables": {
+    "users": {
+      "columns": {
+        "id": { "type": "text", "primaryKey": true },
+        "username": { "type": "text", "unique": true, "nullable": false },
+        "created_at": { "type": "text", "nullable": false }
+      },
+      "indexes": ["username"]
+    },
+    "boards": {
+      "columns": {
+        "id": { "type": "text", "primaryKey": true },
+        "user_id": { "type": "text", "nullable": false, "references": "users.id" },
+        "title": { "type": "text", "nullable": false },
+        "created_at": { "type": "text", "nullable": false }
+      },
+      "indexes": ["user_id"]
+    },
+    "columns": {
+      "columns": {
+        "id": { "type": "text", "primaryKey": true },
+        "board_id": { "type": "text", "nullable": false, "references": "boards.id" },
+        "title": { "type": "text", "nullable": false },
+        "position": { "type": "integer", "nullable": false }
+      },
+      "indexes": ["board_id", "position"]
+    },
+    "cards": {
+      "columns": {
+        "id": { "type": "text", "primaryKey": true },
+        "column_id": { "type": "text", "nullable": false, "references": "columns.id" },
+        "title": { "type": "text", "nullable": false },
+        "details": { "type": "text", "nullable": false },
+        "position": { "type": "integer", "nullable": false },
+        "created_at": { "type": "text", "nullable": false }
+      },
+      "indexes": ["column_id", "position"]
+    }
+  },
+  "notes": {
+    "ordering": "position is a zero-based integer within a board (columns) or a column (cards)",
+    "ids": "text ids allow client-generated identifiers for optimistic UI"
+  }
+}
